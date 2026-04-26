@@ -1,7 +1,7 @@
 import sqlite3
 
 # Connect to a database file (creates it if it does not exist)
-conn = sqlite3.connect('banking_app.db')
+conn = sqlite3.connect('bankdb')
 cursor = conn.cursor()
 
 # Create a table
@@ -13,8 +13,8 @@ cursor.execute('''
     )
 ''')
 
-# Insert data
-cursor.execute("INSERT INTO accounts VALUES (1, 'Maria', 500.00)")
+# Insert data - SHOW DATA
+#cursor.execute("SELECT * FROM accounts")
 conn.commit()   # IMPORTANT: saves your changes!
 
 # Query data
