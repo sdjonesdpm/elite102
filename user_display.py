@@ -1,22 +1,21 @@
-import sqlite3
-import banking_app
 import core_functions
-import showAccounts
+import show_accounts
 
 
-# Connect to a database file (creates it if it does not exist)
-conn = sqlite3.connect('bankdb')
-cursor = conn.cursor()
 
 #Compose CLI Menu loop 
 def main_menu():
+    #make sure table exists befor showing menu
+    core_functions.create_table()
+
     while True:
         print("\nWelcome to the Banking App!")
         print("1. Create Account")
         print("2. Deposit")
         print("3. Withdraw")
         print("4. Check Balance")
-        print("5. Exit")
+        print("5. Show Accounts")
+        print("6. Exit")
 
         choice = input("Please select an option: ")
         if choice == '1':
@@ -29,28 +28,36 @@ def main_menu():
             amount = float(input("Enter deposit amount: "))
             core_functions.deposit(id, amount)
             print("Deposit successful!")
+                #make account info available after each transaction
+            show_accounts.show_accounts()
         elif choice == '3':
             id = int(input("Enter account ID: "))
             amount = float(input("Enter withdrawal amount: "))
-            core_functions.withdraw(id, amount)
-            print("Withdrawal successful!")
+            success = core_functions.withdraw(id, amount)
+            if success:
+                print("Withdrawal successful!")
+            else: 
+                print("Insufficient funds or account not found.")
             #make account info available after each transaction
-            showAccounts.show_accounts()
+            show_accounts.show_accounts()
+
         elif choice == '4':
             id = int(input("Enter account ID: "))
             balance = core_functions.check_balance(id)
             if balance is not None:
                 print(f"Current balance: ${balance:.2f}")
-                showAccounts.show_accounts()
+                show_accounts.show_accounts()
             else:
                 print("Account not found.")
+
         elif choice == '5':
+            show_accounts.show_accounts()
+
+        elif choice == '6':
             print("Thank you for using the Banking App. See you next time!")
             break
         else: 
             print("Invalid option. Please try again. ")
 if __name__ == "__main__":
     main_menu()
-# Always close when done
-conn.close()    
-
+# get_connection() handles close and commit
