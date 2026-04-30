@@ -3,7 +3,7 @@ from contextlib import contextmanager
 
 DB_NAME = 'bankdb'
 
-# 1. Establish connection and cursor at the module level
+# Establish connection and cursor at the module level.
 # or inside a setup function.
 #Ensure the reuse of connections and cursors across functions to avoid overhead and potential issues with multiple connections.
 @contextmanager

@@ -28,7 +28,7 @@ conn.close()
 #cursor.execute("INSERT INTO accounts (name, balance) VALUES (?, ?)", ("Alice", 1000.0))"""
 
 def run_diagnostics():
-   try:
+    try:
         with sqlite3.connect('bankdb') as conn:
             cursor = conn.cursor()
             cursor.execute("SELECT * FROM accounts;")
@@ -37,7 +37,7 @@ def run_diagnostics():
             if not rows:
                 print("No accounts found.")
 
-            for row in rows: 
+            for row in rows:
                 print(row)
 
     except sqlite3.Error as e:
