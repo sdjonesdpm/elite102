@@ -34,13 +34,18 @@ def create_account(name, initial_balance):
         cursor.execute("INSERT INTO accounts (name, balance) VALUES (?, ?)", (name, initial_balance))
 
 def deposit(account_id, amount):
+    #adress negative inputs 
     with get_connection() as (conn, cursor):
+        if amount <= 0:
+            raise ValueError("Deposit amount must be positive.")
         cursor.execute("UPDATE accounts SET balance = balance + ? WHERE id = ?", (amount, account_id))
+        
 
 def withdraw(account_id, amount):
     # Improvement: Add a check here later to prevent negative balances!
-    with get_connection() as conn:
-        cursor = conn.cursor()
+    with get_connection() as (conn, cursor):
+        if amount <= 0:
+            raise ValueError("Withdrawal amount must be positive.")
         # Check current balance first
         cursor.execute("SELECT balance FROM accounts WHERE id = ?", (account_id,))
         result = cursor.fetchone()
