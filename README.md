@@ -2,7 +2,7 @@
 
 ## Project Description
 
-This project is a Python application which models a banking app that interacts with an SQLite database. With this baking app you will be able to complete basic banking related activities and interact with a database-based program.
+This project is a Python application which models a banking app that interacts with an SQLite database. With this baking app you will be able to complete basic banking related activities and interact with a database program. This program also includes a unit testing file to ensure all functions are working properly and can be ran at any time to ensure functionality.
 
 ## Setup Instructions
 
