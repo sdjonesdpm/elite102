@@ -20,19 +20,60 @@ def main_menu():
         choice = input("Please select an option: ")
         if choice == '1':
             name = input("Enter account holder's name: ")
-            initial_balance = float(input("Enter initial balance: "))
+            if not name.strip():
+                print("Name cannot be empty. Please try again.")
+                continue
+            elif len(name) > 100:
+                print("Name is too long. Please enter a name with 100 characters or fewer.")
+                continue
+            #address number names
+            elif any(char.isdigit() for char in name):
+                print("Name cannot contain numbers. Please enter a valid name.")
+                continue
+            try:
+                initial_balance = float(input("Enter initial balance: "))
+                if initial_balance < 0:
+                    print("Initial balance cannot be negative. Please enter a positive number.")
+                    continue
+            except ValueError:
+                print("Invalid input for initial balance. Please enter a valid number.")
+                continue
             core_functions.create_account(name, initial_balance)
             print("Account created successfully!")
+             #make account info available after each transaction
+            show_accounts.show_accounts()
+
         elif choice == '2':
-            id = int(input("Enter account ID: "))
-            amount = float(input("Enter deposit amount: "))
-            core_functions.deposit(id, amount)
-            print("Deposit successful!")
+            #address negative inputs and invalid account IDs
+            try:
+                id = int(input("Enter account ID: "))
+                if id <= 0:
+                    print("Invalid account ID. Please enter a positive integer.")
+                    continue
+                amount = float(input("Enter deposit amount: "))
+                if amount < 0:
+                    print("Invalid deposit amount. Please enter a positive number.")
+                    continue
+                core_functions.deposit(id, amount)
+                print("Deposit successful!")
+            except ValueError as e:
+                print(f"Error: {e}")
                 #make account info available after each transaction
             show_accounts.show_accounts()
+
         elif choice == '3':
-            id = int(input("Enter account ID: "))
+            try:
+                id = int(input("Enter account ID: "))
+                if id <= 0:
+                    print("Invalid account ID. Please enter a positive integer.")
+                    continue
+            except ValueError:
+                print("Invalid account ID. Please enter a valid integer.")
+                continue
             amount = float(input("Enter withdrawal amount: "))
+            if amount < 0:
+                print("Invalid withdrawal amount. Please enter a positive number.")
+                continue
             success = core_functions.withdraw(id, amount)
             if success:
                 print("Withdrawal successful!")
