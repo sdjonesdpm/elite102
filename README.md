@@ -13,6 +13,7 @@ This project is a Python application which models a banking app that interacts w
 ## Feature List
 
 - Create an account
+- Deposit funds
 - Withdraw funds
 - Check balance 
 - Show accounts 
